@@ -20,6 +20,27 @@
 
     </div>
     <script>
+        var tg = window.Telegram.WebApp;
+    tg.expand(); // Разворачиваем Web App на весь экран
+
+    function sendUserDataToUnity(unityInstance) {
+        let user = tg.initDataUnsafe.user;
+        if (!user) {
+            console.error("Не удалось получить данные пользователя Telegram!");
+            return;
+        }
+
+        let userData = {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name || "",
+            username: user.username || "",
+            language: user.language_code
+        };
+
+        // Отправка данных в Unity
+        unityInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", JSON.stringify(userData));
+    }
       var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
@@ -107,7 +128,7 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 document.querySelector("#unity-loading-bar").style.display = "none";
-
+                sendUserDataToUnity(unityInstance);
               }).catch((message) => {
                 alert(message);
               });
