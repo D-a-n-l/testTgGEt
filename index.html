@@ -42,12 +42,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/TestConsole.loader.js";
+      var loaderUrl = buildUrl + "/testsecondSposob.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/TestConsole.data",
-        frameworkUrl: buildUrl + "/TestConsole.framework.js",
-        codeUrl: buildUrl + "/TestConsole.wasm",
+        dataUrl: buildUrl + "/testsecondSposob.data",
+        frameworkUrl: buildUrl + "/testsecondSposob.framework.js",
+        codeUrl: buildUrl + "/testsecondSposob.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Dvelop",
         productName: "DeepLift",
@@ -65,6 +65,11 @@
         document.querySelector("#unity-container").className = "unity-mobile";
         canvas.className = "unity-mobile";
 
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
         canvas.style.width = "100%";
@@ -79,35 +84,14 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
-
                 document.querySelector("#unity-loading-bar").style.display = "none";
+
               }).catch((message) => {
                 alert(message);
               });
             };
 
       document.body.appendChild(script);
-
-      window.onload = function () {
-        if (!window.Telegram || !window.Telegram.WebApp) {
-            console.error("❌ Telegram Web App API не найден! Откройте в Telegram.");
-            return;
-        }
-
-        let tg = window.Telegram.WebApp;
-        console.log("✅ Telegram Web App загружен:", tg);
-
-        let initData = tg.initDataUnsafe;
-        console.log("📌 Данные из Telegram:", initData);
-
-        if (!initData.user) {
-            console.error("❌ Данные о пользователе отсутствуют! Проверьте запуск через Telegram.");
-            return;
-        }
-
-        let firstName = initData.user.first_name;
-        console.log("👤 Имя пользователя:", firstName);
-    };
 
     </script>
   </body>

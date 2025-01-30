@@ -13,13 +13,12 @@ app.post("/", (req, res) => {
 });
 
 bot.onText(/\/start/, (msg) => {
-    bot.sendMessage(msg.chat.id, "Открыть игру:", {
-        reply_markup: {
-            inline_keyboard: [
-                [{ text: "Играть!", web_app: { url: "https://d-a-n-l.github.io/testTgGEt/" } }]
-            ]
-        }
-    });
+    const userId = msg.from.id;
+    const firstName = encodeURIComponent(msg.from.first_name);
+    const url = `https://d-a-n-l.github.io/testTgGEt/?userId=${userId}&name=${firstName}`;
+
+    bot.sendMessage(msg.chat.id, `Открыть игру: [Играть!](${url})`, { parse_mode: "Markdown" });
 });
+
 
 module.exports = app;
