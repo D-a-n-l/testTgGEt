@@ -12,7 +12,7 @@ app.post("/", (req, res) => {
     res.sendStatus(200);
 });
 
-bot.onText(/\/start/, (msg) => {
+/*bot.onText(/\/start/, (msg) => {
     bot.sendMessage(msg.chat.id, "Открыть игру:", {
         reply_markup: {
             inline_keyboard: [
@@ -20,9 +20,9 @@ bot.onText(/\/start/, (msg) => {
             ]
         }
     });
-});
+});*/
 
-/*const gameName = "DeepLift";
+const gameName = "DeepLift";
 const queries = {};
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
 bot.onText(/start|game/, (msg) => bot.sendGame(msg.from.id, gameName));
@@ -44,6 +44,6 @@ bot.on("inline_query", function (iq) {
         id: "0",
         game_short_name: gameName
     }]);
-});*/
+});
 
 module.exports = app;

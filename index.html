@@ -98,12 +98,12 @@
         canvas.style.height = "100%";
       }
 
-          window.onload = function () {
+      window.onload = function() {
         if (window.Telegram && window.Telegram.WebApp) {
             let userData = JSON.stringify(window.Telegram.WebApp.initDataUnsafe);
-            console.log("Полученные данные Telegram:", userData);
+            console.log("Р”Р°РЅРЅС‹Рµ Telegram:", userData);
 
-            // Передача данных в Unity
+            // РџРµСЂРµРґР°С‡Р° РІ Unity
             if (window.unityInstance) {
                 window.unityInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", userData);
             }
