@@ -12,16 +12,6 @@ app.post("/", (req, res) => {
     res.sendStatus(200);
 });
 
-/*bot.onText(/\/start/, (msg) => {
-    bot.sendMessage(msg.chat.id, "Открыть игру:", {
-        reply_markup: {
-            inline_keyboard: [
-                [{ text: "Играть!", web_app: { url: "https://d-a-n-l.github.io/testTgGEt/" } }]
-            ]
-        }
-    });
-});*/
-
 const gameName = "DeepLift";
 const queries = {};
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
