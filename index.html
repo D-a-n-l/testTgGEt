@@ -22,11 +22,6 @@
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
-      var MyGameInstance = null;
-      let tg_bot = window.Telegram.WebApp;
-      tg_bot.expand()
-      let user_id = tg_bot.initDataUnsafe.user.id;
-
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -77,6 +72,10 @@
       }
 
       document.querySelector("#unity-loading-bar").style.display = "block";
+
+      var MyGameInstance = null;
+      window.Telegram.WebApp.expand()
+      let user_id = window.Telegram.WebApp.initDataUnsafe.id;
 
       var script = document.createElement("script");
       script.src = loaderUrl;
