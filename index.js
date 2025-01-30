@@ -13,11 +13,19 @@ app.post("/", (req, res) => {
 });
 
 bot.onText(/\/start/, (msg) => {
-    const userId = msg.from.id;
-    const firstName = encodeURIComponent(msg.from.first_name);
-    const url = `https://d-a-n-l.github.io/testTgGEt/?userId=${userId}&name=${firstName}`;
+    const user = msg.from;
+    const userData = encodeURIComponent(JSON.stringify(user));
 
-    bot.sendMessage(msg.chat.id, `Открыть игру: [Играть!](${url})`, { parse_mode: "Markdown" });
+    bot.sendMessage(msg.chat.id, "Открыть игру:", {
+        reply_markup: {
+            inline_keyboard: [
+                [{ 
+                    text: "Играть!", 
+                    web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?user=${userData}` } 
+                }]
+            ]
+        }
+    });
 });
 
 

@@ -22,6 +22,12 @@
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -42,18 +48,34 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/testsecondSposob.loader.js";
+      var loaderUrl = buildUrl + "/lastSposob.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/testsecondSposob.data",
-        frameworkUrl: buildUrl + "/testsecondSposob.framework.js",
-        codeUrl: buildUrl + "/testsecondSposob.wasm",
+        dataUrl: buildUrl + "/lastSposob.data",
+        frameworkUrl: buildUrl + "/lastSposob.framework.js",
+        codeUrl: buildUrl + "/lastSposob.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Dvelop",
         productName: "DeepLift",
         productVersion: "1.01",
         showBanner: unityShowBanner,
       };
+
+      // By default, Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      // If you would like all file writes inside Unity Application.persistentDataPath
+      // directory to automatically persist so that the contents are remembered when
+      // the user revisits the site the next time, uncomment the following line:
+      // config.autoSyncPersistentDataPath = true;
+      // This autosyncing is currently not the default behavior to avoid regressing
+      // existing user projects that might rely on the earlier manual
+      // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
+      // expected to change.
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
@@ -92,7 +114,25 @@
             };
 
       document.body.appendChild(script);
+      
+      window.onload = function () {
+        // Извлекаем параметры из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userData = urlParams.get("user");
 
+        if (!userData) {
+            console.warn("❌ Данные пользователя не переданы через URL.");
+            return;
+        }
+
+        let user = JSON.parse(decodeURIComponent(userData));
+        console.log("👤 Данные пользователя:", user);
+
+        // Передаём данные в Unity
+        if (window.unityInstance) {
+            window.unityInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", JSON.stringify(user));
+        }
+    };
     </script>
   </body>
 </html>
