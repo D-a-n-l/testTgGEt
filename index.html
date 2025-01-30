@@ -101,27 +101,6 @@
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
-      var tg = window.Telegram.WebApp;
-
-    function sendUserDataToUnity(unityInstance) {
-        let user = tg.initDataUnsafe.user;
-        if (!user) {
-            console.error("Не удалось получить данные пользователя Telegram!");
-            return;
-        }
-
-        let userData = {
-            id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name || "",
-            username: user.username || "",
-            language: user.language_code
-        };
-
-        // Отправка данных в Unity
-        unityInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", JSON.stringify(userData));
-    }
-
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
@@ -130,7 +109,7 @@
               }).then((unityInstance) => {
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 tg.expand(); // Разворачиваем Web App на весь экран
-                sendUserDataToUnity(unityInstance);
+
               }).catch((message) => {
                 alert(message);
               });
