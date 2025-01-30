@@ -18,7 +18,6 @@
         </div>
       </div>
       <div id="unity-warning"> </div>
-
     </div>
     <script>
       var canvas = document.querySelector("#unity-canvas");
@@ -49,12 +48,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/TestTgGet.loader.js";
+      var loaderUrl = buildUrl + "/TestTgData.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/TestTgGet.data",
-        frameworkUrl: buildUrl + "/TestTgGet.framework.js",
-        codeUrl: buildUrl + "/TestTgGet.wasm",
+        dataUrl: buildUrl + "/TestTgData.data",
+        frameworkUrl: buildUrl + "/TestTgData.framework.js",
+        codeUrl: buildUrl + "/TestTgData.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Dvelop",
         productName: "DeepLift",
@@ -99,6 +98,18 @@
         canvas.style.height = "100%";
       }
 
+          window.onload = function () {
+        if (window.Telegram && window.Telegram.WebApp) {
+            let userData = JSON.stringify(window.Telegram.WebApp.initDataUnsafe);
+            console.log("Полученные данные Telegram:", userData);
+
+            // Передача данных в Unity
+            if (window.unityInstance) {
+                window.unityInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", userData);
+            }
+        }
+    };
+
       document.querySelector("#unity-loading-bar").style.display = "block";
 
       var script = document.createElement("script");
@@ -108,7 +119,10 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 document.querySelector("#unity-loading-bar").style.display = "none";
-                tg.expand(); // Разворачиваем Web App на весь экран
+                document.querySelector("#unity-fullscreen-button").onclick = () => {
+                  unityInstance.SetFullscreen(1);
+                  window.unityInstance = unityInstance;
+                };
 
               }).catch((message) => {
                 alert(message);
