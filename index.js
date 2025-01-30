@@ -12,28 +12,14 @@ app.post("/", (req, res) => {
     res.sendStatus(200);
 });
 
-const gameName = "DeepLift";
-const queries = {};
-bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
-bot.onText(/start|game/, (msg) => bot.sendGame(msg.from.id, gameName));
-bot.on("callback_query", function (query) {
-    if (query.game_short_name !== gameName) {
-        bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
-    } else {
-        queries[query.id] = query;
-        let gameurl = "https://d-a-n-l.github.io/testTgGEt/";
-        bot.answerCallbackQuery({
-            callback_query_id: query.id,
-            url: gameurl
-        });
-    }
-});
-bot.on("inline_query", function (iq) {
-    bot.answerInlineQuery(iq.id, [{
-        type: "game",
-        id: "0",
-        game_short_name: gameName
-    }]);
+bot.onText(/\/start/, (msg) => {
+    bot.sendMessage(msg.chat.id, "Открыть игру:", {
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: "Играть!", web_app: { url: "https://d-a-n-l.github.io/testTgGEt/" } }]
+            ]
+        }
+    });
 });
 
 module.exports = app;
