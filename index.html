@@ -74,8 +74,8 @@
       document.querySelector("#unity-loading-bar").style.display = "block";
 
       var MyGameInstance = null;
-      window.Telegram.WebApp.expand()
-      let first_name = window.Telegram.WebApp.initDataUnsafe.user.first_name;
+      let tg = window.Telegram.WebApp;
+      let namefirst = tg.initDataUnsafe.user.first_name;
 
       var script = document.createElement("script");
       script.src = loaderUrl;
@@ -84,7 +84,7 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 MyGameInstance = unityInstance;
-                MyGameInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", first_name);
+                MyGameInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", namefirst);
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
                 alert(message);
