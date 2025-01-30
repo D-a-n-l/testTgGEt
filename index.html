@@ -73,18 +73,13 @@
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
-      var MyGameInstance = null;
-      let tg = window.Telegram.WebApp;
-      let namefirst = tg.initDataUnsafe.user.first_name;
-
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
-                MyGameInstance = unityInstance;
-                MyGameInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", namefirst);
+
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
                 alert(message);
@@ -92,6 +87,27 @@
             };
 
       document.body.appendChild(script);
+
+      window.onload = function () {
+        if (!window.Telegram || !window.Telegram.WebApp) {
+            console.error("❌ Telegram Web App API не найден! Откройте в Telegram.");
+            return;
+        }
+
+        let tg = window.Telegram.WebApp;
+        console.log("✅ Telegram Web App загружен:", tg);
+
+        let initData = tg.initDataUnsafe;
+        console.log("📌 Данные из Telegram:", initData);
+
+        if (!initData.user) {
+            console.error("❌ Данные о пользователе отсутствуют! Проверьте запуск через Telegram.");
+            return;
+        }
+
+        let firstName = initData.user.first_name;
+        console.log("👤 Имя пользователя:", firstName);
+    };
 
     </script>
   </body>
