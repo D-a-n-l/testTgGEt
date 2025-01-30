@@ -75,7 +75,7 @@
 
       var MyGameInstance = null;
       window.Telegram.WebApp.expand()
-      let user_id = window.Telegram.WebApp.initDataUnsafe.id;
+      let first_name = window.Telegram.WebApp.initDataUnsafe.user.first_name;
 
       var script = document.createElement("script");
       script.src = loaderUrl;
@@ -84,12 +84,8 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 MyGameInstance = unityInstance;
-                MyGameInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", user_id);
+                MyGameInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", first_name);
                 document.querySelector("#unity-loading-bar").style.display = "none";
-                document.querySelector("#unity-fullscreen-button").onclick = () => {
-                  unityInstance.SetFullscreen(1);
-                };
-
               }).catch((message) => {
                 alert(message);
               });
