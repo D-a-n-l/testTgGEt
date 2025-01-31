@@ -42,12 +42,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/TestDb.loader.js";
+      var loaderUrl = buildUrl + "/YaUstal.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/TestDb.data",
-        frameworkUrl: buildUrl + "/TestDb.framework.js",
-        codeUrl: buildUrl + "/TestDb.wasm",
+        dataUrl: buildUrl + "/YaUstal.data",
+        frameworkUrl: buildUrl + "/YaUstal.framework.js",
+        codeUrl: buildUrl + "/YaUstal.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Dvelop",
         productName: "DeepLift",
@@ -55,26 +55,8 @@
         showBanner: unityShowBanner,
       };
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-        document.querySelector("#unity-container").className = "unity-mobile";
-        canvas.className = "unity-mobile";
-
-        // To lower canvas resolution on mobile devices to gain some
-        // performance, uncomment the following line:
-        // config.devicePixelRatio = 1;
-
-
-      } else {
-        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-      }
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
@@ -84,14 +66,6 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
-                window.unityInstance = unityInstance;
-                const urlParams = new URLSearchParams(window.location.search);
-                const userData = urlParams.get("user");
-
-                let user = JSON.parse(decodeURIComponent(userData));
-                console.log("👤 Данные пользователя:", user);
-
-                window.unityInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", JSON.stringify(user));
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
                 alert(message);
@@ -99,9 +73,25 @@
             };
 
       document.body.appendChild(script);
+      
+      window.onload = function () {
+        // Извлекаем параметры из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userData = urlParams.get("user");
 
+        if (!userData) {
+            console.warn("❌ Данные пользователя не переданы через URL.");
+            return;
+        }
 
+        let user = JSON.parse(decodeURIComponent(userData));
+        console.log("👤 Данные пользователя:", user);
 
+        // Передаём данные в Unity
+        if (window.unityInstance) {
+            window.unityInstance.SendMessage("TelegramManager", "DataReceived", JSON.stringify(user));
+        }
+      };
     </script>
   </body>
 </html>
