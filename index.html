@@ -84,6 +84,14 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                window.unityInstance = unityInstance;
+                const urlParams = new URLSearchParams(window.location.search);
+                const userData = urlParams.get("user");
+
+                let user = JSON.parse(decodeURIComponent(userData));
+                console.log("👤 Данные пользователя:", user);
+
+                window.unityInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", JSON.stringify(user));
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
                 alert(message);
@@ -92,24 +100,7 @@
 
       document.body.appendChild(script);
 
-      window.onload = function () {
-        // Извлекаем параметры из URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const userData = urlParams.get("user");
 
-        if (!userData) {
-            console.warn("❌ Данные пользователя не переданы через URL.");
-            return;
-        }
-
-        let user = JSON.parse(decodeURIComponent(userData));
-        console.log("👤 Данные пользователя:", user);
-
-        // Передаём данные в Unity
-        if (window.unityInstance) {
-            window.unityInstance.SendMessage("TelegramManager", "OnTelegramDataReceived", JSON.stringify(user));
-        }
-      };
 
     </script>
   </body>
