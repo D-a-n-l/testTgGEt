@@ -20,7 +20,7 @@ bot.onText(/\/start/, (msg) => {
         reply_markup: {
             inline_keyboard: [
                 [{ 
-                    text: "Играть!", 
+                    text: `Играть! ${userData}`, 
                     web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?user=${userData}` } 
                 }]
             ]
