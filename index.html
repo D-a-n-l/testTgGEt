@@ -63,7 +63,7 @@
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
+        window.gameInstance = createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 document.querySelector("#unity-loading-bar").style.display = "none";
@@ -73,7 +73,7 @@
             console.log("👤 Имя пользователя:", firstName);
             
             // Отправляем данные в Unity
-            unityInstance.SendMessage("DataBas", "DataReceived", firstName);
+            window.gameInstance.SendMessage("DataBas", "DataReceived", firstName);
               }).catch((message) => {
                 alert(message);
               });
