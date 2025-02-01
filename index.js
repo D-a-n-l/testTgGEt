@@ -12,21 +12,14 @@ app.post("/", (req, res) => {
     res.sendStatus(200);
 });
 
-bot.onText(/\/start/, (msg) => {
-    const user = msg.from;
-    const userData = encodeURIComponent(JSON.stringify(user));
-
-    bot.sendMessage(msg.chat.id, "Открыть игру:", {
-        reply_markup: {
-            inline_keyboard: [
-                [{ 
-                    text: "Я устал уже", 
-                    web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?user=${userData}` } 
-                }]
-            ]
-        }
-    });
+bot.sendMessage(msg.chat.id, "Открыть игру:", {
+    reply_markup: {
+        inline_keyboard: [
+            [{ text: "Играть!", web_app: { url: "https://d-a-n-l.github.io/testTgGEt/" } }]
+        ]
+    }
 });
+
 
 
 module.exports = app;
