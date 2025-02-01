@@ -71,7 +71,7 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 MyGameInstance = unityInstance;
-                let firstName = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : "Гость";
+                let firstName = tg_bot.initDataUnsafe.user ? tg_bot.initDataUnsafe.user.first_name : "Гость";
                 MyGameInstance.SendMessage("TelegramManager", "DataReceived", firstName);
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
