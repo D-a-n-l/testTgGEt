@@ -66,6 +66,7 @@
         window.gameInstance = createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                window.gameInstance = unityInstance;
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 let tg = window.Telegram.WebApp;
             let firstName = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : "Гость";
