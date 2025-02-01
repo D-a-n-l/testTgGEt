@@ -20,7 +20,11 @@
       <div id="unity-warning"> </div>
     </div>
     <script>
-      window.Telegram.WebApp.requestFullscreen();
+      var MyGameInstance = null;
+      let tg_bot = window.Telegram.WebApp;
+      tg_bot.requestFullscreen();
+      let userData = JSON.stringify(tg_bot.initDataUnsafe);
+
       var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
@@ -73,7 +77,8 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
-                window.unityInstance = unityInstance;
+                MyGameInstance = unityInstance;
+                MyGameInstance.SendMessage("TelegramManager", "DataReceived", userData);
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
                 alert(message);
@@ -81,18 +86,6 @@
             };
 
       document.body.appendChild(script);
-
-      window.onload = function () {
-        if (window.Telegram && window.Telegram.WebApp) {
-            let userData = JSON.stringify(window.Telegram.WebApp.initDataUnsafe);
-            console.log("Полученные данные Telegram:", userData);
-
-            // Передача данных в Unity
-            if (window.unityInstance) {
-                window.unityInstance.SendMessage("TelegramManager", "DataReceived", userData);
-            }
-        }
-    };
     </script>
   </body>
 </html>
