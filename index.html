@@ -42,12 +42,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/testdatabas.loader.js";
+      var loaderUrl = buildUrl + "/testnewlib.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/testdatabas.data",
-        frameworkUrl: buildUrl + "/testdatabas.framework.js",
-        codeUrl: buildUrl + "/testdatabas.wasm",
+        dataUrl: buildUrl + "/testnewlib.data",
+        frameworkUrl: buildUrl + "/testnewlib.framework.js",
+        codeUrl: buildUrl + "/testnewlib.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Dvelop",
         productName: "DeepLift",
@@ -59,28 +59,21 @@
       canvas.style.height = "100%";
 
       document.querySelector("#unity-loading-bar").style.display = "block";
-      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/build.json", {onProgress: UnityProgress});
+
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
-                
                 document.querySelector("#unity-loading-bar").style.display = "none";
-                let tg = window.Telegram.WebApp;
-            let firstName = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : "Гость";
-
-            console.log("👤 Имя пользователя:", firstName);
-            
-            // Отправляем данные в Unity
-            gameInstance.SendMessage("DataBas", "DataReceived", firstName);
               }).catch((message) => {
                 alert(message);
               });
             };
 
       document.body.appendChild(script);
+
     </script>
   </body>
 </html>
