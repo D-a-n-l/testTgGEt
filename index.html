@@ -72,7 +72,7 @@
               }).then((unityInstance) => {
                 MyGameInstance = unityInstance;
 
-
+                MyGameInstance.SendMessage("TelegramManager", "DataReceived", "hdgdsfg");
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
                 alert(message);
