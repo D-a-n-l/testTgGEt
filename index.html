@@ -23,7 +23,6 @@
       var MyGameInstance = null;
       let tg_bot = window.Telegram.WebApp;
       tg_bot.requestFullscreen();
-      let userData = JSON.stringify(tg_bot.initDataUnsafe);
 
       var canvas = document.querySelector("#unity-canvas");
 
@@ -78,6 +77,8 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 MyGameInstance = unityInstance;
+                let userData = JSON.stringify(tg_bot.initDataUnsafe);
+
                 MyGameInstance.SendMessage("TelegramManager", "DataReceived", userData);
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
