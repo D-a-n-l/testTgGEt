@@ -83,20 +83,16 @@
       document.body.appendChild(script);
 
       window.onload = function () {
-        // Извлекаем параметры из URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const userData = urlParams.get("user");
+        if (window.Telegram && window.Telegram.WebApp) {
+            let userData = JSON.stringify(window.Telegram.WebApp.initDataUnsafe);
+            console.log("Полученные данные Telegram:", userData);
 
-        if (!userData) {
-            console.warn("❌ Данные пользователя не переданы через URL.");
-            return;
+            // Передача данных в Unity
+            if (window.unityInstance) {
+                window.unityInstance.SendMessage("TelegramManager", "DataReceived", userData);
+            }
         }
-
-        let user = JSON.parse(decodeURIComponent(userData));
-        console.log("👤 Данные пользователя:", user);
-
-        window.unityInstance.SendMessage("TelegramManager", "DataReceived", JSON.stringify(user));
-      };
+    };
     </script>
   </body>
 </html>
