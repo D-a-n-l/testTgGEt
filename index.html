@@ -75,5 +75,25 @@
       document.body.appendChild(script);
 
     </script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBBXnBzxqUZ_H1sHF4fX34Mcm_e27bv0GY",
+        authDomain: "webdeeplift.firebaseapp.com",
+        databaseURL: "https://webdeeplift-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "webdeeplift",
+        storageBucket: "webdeeplift.firebasestorage.app",
+        messagingSenderId: "406207147473",
+        appId: "1:406207147473:web:2a3445dd09ee14349e84f0"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>
