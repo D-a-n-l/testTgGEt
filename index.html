@@ -78,7 +78,7 @@
               }).then((unityInstance) => {
                 MyGameInstance = unityInstance;
                 let firstName = tg_bot.initDataUnsafe.user.first_name;
-                MyGameInstance.SendMessage("TelegramManager", "DataReceived", firstName);
+                //MyGameInstance.SendMessage("TelegramManager", "DataReceived", firstName);
                 document.querySelector("#unity-loading-bar").style.display = "none";
               }).catch((message) => {
                 alert(message);
