@@ -22,6 +22,12 @@
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -42,12 +48,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/YaUstal.loader.js";
+      var loaderUrl = buildUrl + "/NewSposob.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/YaUstal.data",
-        frameworkUrl: buildUrl + "/YaUstal.framework.js",
-        codeUrl: buildUrl + "/YaUstal.wasm",
+        dataUrl: buildUrl + "/NewSposob.data",
+        frameworkUrl: buildUrl + "/NewSposob.framework.js",
+        codeUrl: buildUrl + "/NewSposob.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Dvelop",
         productName: "DeepLift",
@@ -73,7 +79,7 @@
             };
 
       document.body.appendChild(script);
-      
+
       window.onload = function () {
         // Извлекаем параметры из URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -87,10 +93,7 @@
         let user = JSON.parse(decodeURIComponent(userData));
         console.log("👤 Данные пользователя:", user);
 
-        // Передаём данные в Unity
-        if (window.unityInstance) {
-            window.unityInstance.SendMessage("TelegramManager", "DataReceived", JSON.stringify(user));
-        }
+        window.unityInstance.SendMessage("TelegramManager", "DataReceived", JSON.stringify(user));
       };
     </script>
   </body>
