@@ -74,7 +74,7 @@
             console.log("👤 Имя пользователя:", firstName);
             
             // Отправляем данные в Unity
-            window.gameInstance.SendMessage("DataBas", "DataReceived", firstName);
+            SendMessage("DataBas", "DataReceived", firstName);
               }).catch((message) => {
                 alert(message);
               });
