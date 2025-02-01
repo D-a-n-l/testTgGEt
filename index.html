@@ -20,10 +20,6 @@
       <div id="unity-warning"> </div>
     </div>
     <script>
-            var MyGameInstance = null;
-      let tg_bot = window.Telegram.WebApp;
-
-
       var canvas = document.querySelector("#unity-canvas");
 
       function unityShowBanner(msg, type) {
@@ -46,12 +42,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/pzdc.loader.js";
+      var loaderUrl = buildUrl + "/testdatabas.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/pzdc.data",
-        frameworkUrl: buildUrl + "/pzdc.framework.js",
-        codeUrl: buildUrl + "/pzdc.wasm",
+        dataUrl: buildUrl + "/testdatabas.data",
+        frameworkUrl: buildUrl + "/testdatabas.framework.js",
+        codeUrl: buildUrl + "/testdatabas.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Dvelop",
         productName: "DeepLift",
@@ -70,17 +66,32 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
-                MyGameInstance = unityInstance;
-                let firstName = tg_bot.initDataUnsafe.user ? tg_bot.initDataUnsafe.user.first_name : "Гость";
                 document.querySelector("#unity-loading-bar").style.display = "none";
-                MyGameInstance.SendMessage("TelegramManager", "DataReceived", firstName);
               }).catch((message) => {
                 alert(message);
               });
             };
-      
+
       document.body.appendChild(script);
 
+      window.onload = function () {
+        // Проверяем, загружен ли WebGL
+        if (!window.unityInstance) {
+            console.error("❌ Unity WebGL не загружен!");
+            return;
+        }
+
+        // Ждём появления объекта TelegramManager в Unity
+        setTimeout(() => {
+            let tg = window.Telegram.WebApp;
+            let firstName = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : "Гость";
+
+            console.log("👤 Имя пользователя:", firstName);
+            
+            // Отправляем данные в Unity
+            window.unityInstance.SendMessage("DataBas", "DataReceived", firstName);
+        }, 1000); // Даем 1 секунду на загрузку
+    };
     </script>
   </body>
 </html>
