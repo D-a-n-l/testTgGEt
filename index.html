@@ -22,7 +22,12 @@
     </div>
     <script>
       var canvas = document.querySelector("#unity-canvas");
-
+      function checkOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+        alert("Please rotate your device to landscape mode.");
+    }
+}
+window.addEventListener("resize", checkOrientation);
       window.Telegram.WebApp.requestFullscreen();
       window.Telegram.WebApp.lockOrientation();
       function unityShowBanner(msg, type) {
