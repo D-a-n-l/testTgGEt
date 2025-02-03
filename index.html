@@ -25,7 +25,7 @@
       var canvas = document.querySelector("#unity-canvas");
 
       window.Telegram.WebApp.requestFullscreen();
-      window.Telegram.WebApp.contentSafeAreaInset.top = 20;
+
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -78,7 +78,9 @@
             };
 
       document.body.appendChild(script);
-
+      window.Telegram.WebApp.contentSafeAreaInset.top = 100;
+      window.Telegram.WebApp.contentSafeAreaInset.left = 100;
+      window.Telegram.WebApp.contentSafeAreaInset.right = 100;
     </script>
   </body>
 </html>
