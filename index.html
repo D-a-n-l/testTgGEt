@@ -20,14 +20,12 @@
       </div>
       <div id="unity-warning"> </div>
     </div>
+    <style></style>
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
       window.Telegram.WebApp.requestFullscreen();
-screen.orientation.lock("landscape").catch(err => {
-    console.log("Ошибка блокировки ориентации:", err);
-});
-
+      window.Telegram.WebApp.contentSafeAreaInset.top = 20;
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
