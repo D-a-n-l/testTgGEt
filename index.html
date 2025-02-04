@@ -25,7 +25,8 @@
       var canvas = document.querySelector("#unity-canvas");
 
       window.Telegram.WebApp.requestFullscreen();
-
+      window.Telegram.WebApp.SettingsButton.hide();
+      window.Telegram.WebApp.BackButton.hide();
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
