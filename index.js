@@ -9,11 +9,6 @@ const bot = new TelegramBot(TOKEN);
 
 let users = {}; // Словарь для хранения { username: user_id }
 
-app.post("/", (req, res) => {
-    bot.processUpdate(req.body);
-    res.sendStatus(200);
-});
-
 // Обрабатываем /start и сохраняем user_id
 bot.onText(/\/start/, (msg) => {
     const user_id = msg.from.id;
@@ -31,16 +26,6 @@ bot.onText(/\/start/, (msg) => {
             ]
         }
     });
-});
-
-// API для получения user_id по username
-app.get("/get_user", (req, res) => {
-    const username = req.query.username?.toLowerCase();
-    if (username && users[username]) {
-        res.json({ username: username, user_id: users[username] });
-    } else {
-        res.json({ error: "User not found" });
-    }
 });
 
 
