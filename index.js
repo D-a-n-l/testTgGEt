@@ -16,7 +16,7 @@ bot.onText(/\/start/, (msg) => {
     bot.sendMessage(msg.chat.id, "Открыть игру:", {
         reply_markup: {
             inline_keyboard: [
-                [{ text: "Play", web_app: { url: "https://d-a-n-l.github.io/testTgGEt/" } }]
+                [{ text: msg.from.username, web_app: { url: "https://d-a-n-l.github.io/testTgGEt/" } }]
             ]
         }
     });
