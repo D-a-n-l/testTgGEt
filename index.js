@@ -5,12 +5,21 @@ const app = express();
 app.use(express.json());
 
 const TOKEN = "6436341565:AAF9bPKkb3Uqkd_X6ZoxmDMtqCWAvBs4U_E";
-const bot = new TelegramBot(TOKEN);
 
-app.post("/", (req, res) => {
-    bot.processUpdate(req.body);
-    res.sendStatus(200);
-});
+const bot = new TelegramBot(TOKEN, { webHook: true });
+
+const URL = 'https://test-tg-g-et.vercel.app/';
+bot.setWebHook(`${URL}/api/bot${TOKEN}`);
+
+module.exports = async (req, res) => {
+    if (req.method === 'POST') {
+        res.status(200).end(); // Отвечаем сразу, чтобы избежать задержки
+        bot.processUpdate(req.body);
+    } else {
+        res.status(200).send('Hello from Telegram Bot');
+    }
+};
+
 
 bot.onText(/\/start/, (msg) => {
     const username = msg.from.username || "";
@@ -25,6 +34,3 @@ bot.onText(/\/start/, (msg) => {
 
     bot.sendMessage(msg.chat.id, 'Выберите кнопку:', keyboard);
 });
-
-
-module.exports = app;
