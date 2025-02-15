@@ -18,13 +18,7 @@ bot.onText(/\/start/, (msg) => {
     const keyboard = {
         reply_markup: {
             inline_keyboard: [
-                [
-                    { text: 'Play', web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }
-                ],
-                [
-                    { text: 'Кнопка 1', callback_data: 'btn1' },
-                    { text: 'Кнопка 2', callback_data: 'btn2' }
-                ]
+                [{ text: 'Play', web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }]
             ]
         }
     };
