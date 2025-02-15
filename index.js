@@ -1,15 +1,7 @@
-const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
-
-const app = express();
-app.use(express.json());
 
 const TOKEN = "6436341565:AAF9bPKkb3Uqkd_X6ZoxmDMtqCWAvBs4U_E";
 const bot = new TelegramBot(TOKEN, { webHook: true });
-
-// Устанавливаем Webhook (замени на свой Vercel-домен)
-const URL = 'https://test-tg-g-et.vercel.app/';
-bot.setWebHook(`${URL}/api/bot${TOKEN}`);
 
 module.exports = async (req, res) => {
     if (req.method === 'POST') {
@@ -110,5 +102,3 @@ bot.on('callback_query', (query) => {
 
     bot.answerCallbackQuery(query.id);
 });
-
-module.exports = app;
