@@ -19,8 +19,9 @@ bot.onText(/\/start/, (msg) => {
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: 'Типо описание', callback_data: 'btn1' },
-                    { text: "Играть", web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }
+                    { text: 'DeepLift'},
+                    { text: 'Description', callback_data: 'btn1' },
+                    { text: 'Play', web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }
                 ],
                 [
                     { text: 'Кнопка 1', callback_data: 'btn1' },
