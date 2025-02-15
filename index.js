@@ -13,20 +13,25 @@ module.exports = async (req, res) => {
 };
 
 bot.onText(/\/start/, (msg) => {
+    const username = msg.from.username || "";
+    
     const keyboard = {
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: 'DeepLift', callback_data: 'DeepLift'}
+                    { text: 'DeepLift'},
+                    { text: 'Description', callback_data: 'btn1' },
+                    { text: 'Play', web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }
                 ],
                 [
-                    { text: 'StreetPigeon', callback_data: 'StreetPigeon'}
-                ],
+                    { text: 'Кнопка 1', callback_data: 'btn1' },
+                    { text: 'Кнопка 2', callback_data: 'btn2' }
+                ]
             ]
         }
     };
 
-    bot.sendMessage(msg.chat.id, 'Выберите игру:', keyboard);
+    bot.sendMessage(msg.chat.id, 'Выберите кнопку:', keyboard);
 });
 
 // Обработка нажатий на inline-кнопки
