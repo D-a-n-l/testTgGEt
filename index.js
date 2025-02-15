@@ -30,7 +30,7 @@ bot.onText(/\/start/, (msg) => {
         }
     };
 
-    bot.sendMessage(chatId, 'Выберите кнопку:', keyboard);
+    bot.sendMessage(msg.chat.id, 'Выберите кнопку:', keyboard);
 });
 
 
