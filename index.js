@@ -34,7 +34,7 @@ bot.on('callback_query', (query) => {
     const chatId = query.message.chat.id;
 
     if (query.data === 'DeepLift') {
-        const username = msg.from.username || "";
+        const username = query.from.username || "";
 
         const newKeyboard = {
             reply_markup: {
