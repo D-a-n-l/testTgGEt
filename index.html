@@ -23,7 +23,7 @@
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
-      window.Telegram.WebApp.requestFullscreen();
+
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -50,10 +50,9 @@
         dataUrl: buildUrl + "/Bot.data",
         frameworkUrl: buildUrl + "/Bot.framework.js",
         codeUrl: buildUrl + "/Bot.wasm",
-        streamingAssetsUrl: "StreamingAssets",
         companyName: "Dvelop",
         productName: "DeepLift",
-        productVersion: "1.01",
+        productVersion: "1",
         showBanner: unityShowBanner,
       };
 
