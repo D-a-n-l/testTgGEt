@@ -12,12 +12,14 @@ module.exports = async (req, res) => {
     }
 };
 
-bot.onText(/\/start/, (msg) => {
+bot.onText(/\/start/, async (msg) => {
+    const username = msg.from.username || "";
+
     const keyboard = {
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: 'DeepLift', callback_data: 'DeepLift'}
+                    { text: 'Play', web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }
                 ],
                 [
                     { text: 'StreetPigeon', callback_data: 'StreetPigeon'}
@@ -26,9 +28,8 @@ bot.onText(/\/start/, (msg) => {
         }
     };
 
-    bot.sendMessage(msg.chat.id, 'Выберите игру:', keyboard);
+    await bot.sendMessage(msg.chat.id, 'Выберите игру:', keyboard);
 });
-
 
 bot.on('callback_query', async (query) => {
     const chatId = query.message.chat.id;
