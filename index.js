@@ -12,19 +12,24 @@ module.exports = async (req, res) => {
     }
 };
 
-bot.onText(/\/start/, (msg) => {
-    const username = msg.from.username || "";
-
-    bot.sendMessage(msg.chat.id, "Открыть игру:", {
+bot.onText(/\/start/, async (msg) => {
+    const keyboard = {
         reply_markup: {
             inline_keyboard: [
-                [{ text: "Играть", web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }]
+                [
+                    { text: 'DeepLift', callback_data: 'DeepLift'}
+                ],
+                [
+                    { text: 'StreetPigeon', callback_data: 'StreetPigeon'}
+                ],
             ]
         }
-    });
+    };
+
+    await bot.sendMessage(msg.chat.id, 'Выберите игру:', keyboard);
 });
 
-bot.on('callback_query', (query) => {
+bot.on('callback_query', async (query) => {
     const chatId = query.message.chat.id;
     const username = query.from.username || "";
 
@@ -43,7 +48,7 @@ bot.on('callback_query', (query) => {
             }
         };
 
-        bot.editMessageText('Выберите действие:', {
+        await bot.editMessageText('Выберите действие:', {
             chat_id: chatId,
             message_id: query.message.message_id,
             reply_markup: newKeyboard.reply_markup
@@ -65,7 +70,7 @@ bot.on('callback_query', (query) => {
             }
         };
 
-        bot.editMessageText('Выберите действие:', {
+        await bot.editMessageText('Выберите действие:', {
             chat_id: chatId,
             message_id: query.message.message_id,
             reply_markup: newKeyboard.reply_markup
@@ -86,12 +91,12 @@ bot.on('callback_query', (query) => {
             }
         };
 
-        bot.editMessageText('Нажмите кнопку ниже:', {
+        await bot.editMessageText('Нажмите кнопку ниже:', {
             chat_id: chatId,
             message_id: query.message.message_id,
             reply_markup: originalKeyboard.reply_markup
         });
     }
 
-    bot.answerCallbackQuery(query.id);
+    await bot.answerCallbackQuery(query.id);
 });
