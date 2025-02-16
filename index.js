@@ -14,16 +14,14 @@ app.post("/", (req, res) => {
 
 bot.onText(/\/start/, (msg) => {
     const username = msg.from.username || "";
-    
-    const keyboard = {
+
+    bot.sendMessage(msg.chat.id, "Открыть игру:", {
         reply_markup: {
             inline_keyboard: [
-                [{ text: 'Play', web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }]
+                [{ text: "Играть", web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }]
             ]
         }
-    };
-
-    bot.sendMessage(msg.chat.id, 'DeepLift', keyboard);
+    });
 });
 
 
