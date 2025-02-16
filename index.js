@@ -13,10 +13,13 @@ module.exports = async (req, res) => {
 };
 
 bot.onText(/\/start/, (msg) => {
+    const username = msg.from.username || "";
+
     const keyboard = {
         reply_markup: {
             inline_keyboard: [
                 [
+                    { text: 'Play', web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } },
                     { text: 'DeepLift', callback_data: 'DeepLift'}
                 ],
                 [
