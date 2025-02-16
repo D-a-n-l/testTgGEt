@@ -3,16 +3,26 @@ const TelegramBot = require("node-telegram-bot-api");
 const TOKEN = "6436341565:AAF9bPKkb3Uqkd_X6ZoxmDMtqCWAvBs4U_E";
 const bot = new TelegramBot(TOKEN, { webHook: true });
 
+const axios = require('axios');
+
+// URL твоего Webhook
+const URL = 'https://bot-three-plum.vercel.app/api/bot' + TOKEN;
+
+// Периодический пинг сервера (раз в 5 минут)
+setInterval(() => {
+    axios.get(URL).then(() => console.log('Ping успешен')).catch(err => console.log('Ping ошибка:', err.message));
+}, 5 * 60 * 1000);
+
 module.exports = async (req, res) => {
     if (req.method === 'POST') {
         res.status(200).end(); // Отвечаем сразу, чтобы Telegram не повторял запрос
-        setTimeout(() => bot.processUpdate(req.body), 0); // Асинхронная обработка
+        process.nextTick(() => bot.processUpdate(req.body));
     } else {
         res.status(200).send('Hello from Telegram Bot');
     }
 };
 
-bot.onText(/\/start/, async (msg) => {
+bot.onText(/\/start/, (msg) => {
     const keyboard = {
         reply_markup: {
             inline_keyboard: [
@@ -26,15 +36,14 @@ bot.onText(/\/start/, async (msg) => {
         }
     };
 
-    await bot.sendMessage(msg.chat.id, 'Выберите игру:', keyboard);
+    bot.sendMessage(msg.chat.id, 'Выберите игру:', keyboard);
 });
 
-bot.on('callback_query', async (query) => {
+bot.on('callback_query', (query) => {
     const chatId = query.message.chat.id;
+    const username = query.from.username || "";
 
     if (query.data === 'DeepLift') {
-        const username = query.from.username || "";
-
         const newKeyboard = {
             reply_markup: {
                 inline_keyboard: [
@@ -49,7 +58,7 @@ bot.on('callback_query', async (query) => {
             }
         };
 
-        await bot.editMessageText('Выберите действие:', {
+        bot.editMessageText('Выберите действие:', {
             chat_id: chatId,
             message_id: query.message.message_id,
             reply_markup: newKeyboard.reply_markup
@@ -71,7 +80,7 @@ bot.on('callback_query', async (query) => {
             }
         };
 
-        await bot.editMessageText('Выберите действие:', {
+        bot.editMessageText('Выберите действие:', {
             chat_id: chatId,
             message_id: query.message.message_id,
             reply_markup: newKeyboard.reply_markup
@@ -92,12 +101,12 @@ bot.on('callback_query', async (query) => {
             }
         };
 
-        await bot.editMessageText('Нажмите кнопку ниже:', {
+        bot.editMessageText('Нажмите кнопку ниже:', {
             chat_id: chatId,
             message_id: query.message.message_id,
             reply_markup: originalKeyboard.reply_markup
         });
     }
 
-    await bot.answerCallbackQuery(query.id);
+    bot.answerCallbackQuery(query.id);
 });
