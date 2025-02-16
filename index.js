@@ -6,7 +6,7 @@ const bot = new TelegramBot(TOKEN, { webHook: true });
 module.exports = async (req, res) => {
     if (req.method === 'POST') {
         res.status(200).end(); // Отвечаем сразу, чтобы Telegram не повторял запрос
-        setImmediate(() => bot.processUpdate(req.body));
+        process.nextTick(() => bot.processUpdate(req.body));
     } else {
         res.status(200).send('Bot is enable');
     }
