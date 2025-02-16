@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
         res.status(200).end(); // Отвечаем сразу, чтобы Telegram не повторял запрос
         process.nextTick(() => bot.processUpdate(req.body));
     } else {
-        res.status(200).send('Bot is enable');
+        res.status(200).send('Hello from Telegram Bot');
     }
 };
 
