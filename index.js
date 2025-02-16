@@ -5,21 +5,19 @@ const bot = new TelegramBot(TOKEN, { webHook: true });
 
 module.exports = async (req, res) => {
     if (req.method === 'POST') {
-        res.status(200).end();
-        bot.processUpdate(req.body);
+        res.status(200).end(); // Отвечаем сразу, чтобы Telegram не повторял запрос
+        setTimeout(() => bot.processUpdate(req.body), 0); // Асинхронная обработка
     } else {
         res.status(200).send('Hello from Telegram Bot');
     }
 };
 
 bot.onText(/\/start/, async (msg) => {
-    const username = msg.from.username || "";
-
     const keyboard = {
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: 'Play', web_app: { url: `https://d-a-n-l.github.io/testTgGEt/?username=${username}` } }
+                    { text: 'DeepLift', callback_data: 'DeepLift'}
                 ],
                 [
                     { text: 'StreetPigeon', callback_data: 'StreetPigeon'}
