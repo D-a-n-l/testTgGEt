@@ -3,12 +3,17 @@ const TelegramBot = require("node-telegram-bot-api");
 const TOKEN = "6436341565:AAF9bPKkb3Uqkd_X6ZoxmDMtqCWAvBs4U_E";
 const bot = new TelegramBot(TOKEN, { webHook: true });
 
+const URL = 'https://bot-three-plum.vercel.app/';
+bot.setWebHook(`${URL}/api/bot${TOKEN}`, {
+    drop_pending_updates: true
+});
+
 module.exports = async (req, res) => {
     if (req.method === 'POST') {
         res.status(200).end(); // Отвечаем сразу, чтобы Telegram не повторял запрос
-        process.nextTick(() => bot.processUpdate(req.body));
+        setImmediate(() => bot.processUpdate(req.body));
     } else {
-        res.status(200).send('Hello from Telegram Bot');
+        res.status(200).send('Bot is enable');
     }
 };
 
